@@ -1,4 +1,3 @@
-
 First, run the development server:
 
 ```bash
@@ -12,4 +11,12 @@ bun dev
 ```
 
 # SRL-NEXT-JS
-# SRL-NEXT-JS
+
+### Color codes
+
+```bash
+Primary -> #7777d9
+Secondary -> #fffefe
+HREF/Links -> #bf0000
+Text Color -> #000000
+```
