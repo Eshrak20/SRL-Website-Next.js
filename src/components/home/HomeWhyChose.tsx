@@ -1,0 +1,36 @@
+import { features } from "@/src/data/HomeData/HomeWhyChose.data";
+import SectionTitle from "../SectionTitle"
+
+const HomeWhyChoses = () => {
+  return (
+    <section className="transition-colors duration-300">
+      <div className="">
+        <div className="-mb-3">
+          <SectionTitle name="Why SRL ?" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((item, index) => (
+            <div
+              key={index}
+              className="bg-card p-8 rounded-xl shadow-sm border border-border flex flex-col h-full transition-all duration-300"
+            >
+              <div className="mb-4">{item.icon}</div>
+
+              <h3 className="text-xl font-bold text-primary mb-4">
+                {item.title}
+              </h3>
+
+              {/* Changed text-primary/70 to text-muted-foreground for better dark mode contrast */}
+              <p className="text-muted-foreground text-[15px] leading-relaxed mb-6 grow">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HomeWhyChoses;

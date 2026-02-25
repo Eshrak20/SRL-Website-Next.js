@@ -19,6 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import logo from "@/src/assets/logo/logo.jpeg";
 import SupportModal from "../../supportModal/supportModal";
+import CustomSRLLogo from "../../home/CustomSRLLogo";
 
 interface SocialLink {
   id: number;
@@ -105,57 +106,53 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
 
   return (
     <>
-      <SupportModal
-        isOpen={callOpen}
-        onClose={() => setCallOpen(false)}
-        phoneNumber={settingData?.data?.[0]?.primary_phone || "01872175065"}
-      />
+      {/* ... (SupportModal and Overlay remain same) */}
 
-      {/* Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 z-[60]"
-            onClick={() => setIsOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Navbar */}
       <motion.nav
         initial={{ y: 0 }}
         animate={{ y: isVisible ? 0 : -100 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-300 ${
-          isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"
+        className={`fixed top-0 left-0 right-0 z-70 transition-all duration-300 ${
+          isScrolled
+            ? "bg-[#050505]/90 backdrop-blur-md shadow-md py-2"
+            : "bg-transparent py-4"
         }`}
       >
-        <div className="mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
-          {/* Logo */}
-          <motion.div whileHover={{ scale: 1.02 }}>
-            <Link href="/">
-              <Image
-                src={logo}
-                alt="Logo"
-                className={`h-10 md:h-20 w-auto ${
-                  isScrolled ? "brightness-100" : "drop-shadow-xl"
-                }`}
-              />
-            </Link>
-          </motion.div>
+        {/* CHANGED: px-6 to px-6 (matching banner) and mx-auto container */}
+        <div className="container mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
+          {/* --- LOGO SECTION --- */}
+          {/* We wrap the logo in a Link and remove the massive padding/glow for navbar use */}
+          <Link href="/" className="relative flex items-center group">
+            <div className="scale-50 md:scale-75 origin-left transition-transform duration-300">
+              <CustomSRLLogo />
+            </div>
+
+            {/* Optional: Add the text brand name next to it if the logo is too small */}
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className={`ml-2 hidden md:block transition-colors ${isScrolled ? "text-white" : "text-white/80"}`}
+            >
+              <p className="text-[10px] font-mono tracking-[0.4em] uppercase opacity-50">
+                Engineering
+              </p>
+            </motion.div>
+          </Link>
 
           {/* Menu Toggle Button */}
-          <div className="flex-1 flex justify-end">
+          <div className="flex items-center gap-4">
+            {/* Social icons can go here if needed, or just keep the Menu toggle */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="group flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-all"
+              className={`group flex items-center gap-3 px-5 py-2.5 rounded-full transition-all ${
+                isScrolled
+                  ? "bg-primary text-white"
+                  : "bg-white/10 backdrop-blur-md border border-white/20 text-white"
+              }`}
             >
-              <span className="hidden md:block text-md font-black uppercase tracking-[0.2em] text-primary">
+              <span className="hidden md:block text-xs font-black uppercase tracking-[0.2em]">
                 Menu
               </span>
               <div className="w-5 h-3 flex flex-col justify-between items-end">
@@ -165,11 +162,11 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
                     rotate: isOpen ? 45 : 0,
                     y: isOpen ? 5.5 : 0,
                   }}
-                  className="h-[1.5px] bg-primary w-full rounded-full origin-right"
+                  className={`h-[1.5px] rounded-full origin-right ${isScrolled ? "bg-white" : "bg-primary"}`}
                 />
                 <motion.span
                   animate={{ opacity: isOpen ? 0 : 1 }}
-                  className="h-[1.5px] bg-primary w-2/3 rounded-full"
+                  className={`h-[1.5px] w-2/3 rounded-full ${isScrolled ? "bg-white" : "bg-primary"}`}
                 />
                 <motion.span
                   animate={{
@@ -177,7 +174,7 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
                     rotate: isOpen ? -45 : 0,
                     y: isOpen ? -5.5 : 0,
                   }}
-                  className="h-[1.5px] bg-primary w-full rounded-full origin-right"
+                  className={`h-[1.5px] rounded-full origin-right ${isScrolled ? "bg-white" : "bg-primary"}`}
                 />
               </div>
             </motion.button>

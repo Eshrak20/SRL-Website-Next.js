@@ -1,260 +1,210 @@
 "use client";
+
+import React, { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Play, ArrowRight } from "lucide-react";
 import Typewriter from "typewriter-effect";
-import { motion } from "framer-motion";
-import { Play } from "lucide-react";
 import Link from "next/link";
 
 const BannerHome = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { scrollY } = useScroll();
+
+  // Parallax transforms
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const scale = useTransform(scrollY, [0, 500], [1, 1.1]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsLoaded(true);
+  }, []);
+
+  const titleText = "REAL ESTATE DEVELOPMENT";
+  const words = titleText.split(" ");
+
   return (
-    <div className="relative w-full min-h-screen bg-background overflow-hidden mt-20 md:mt-0 flex items-center">
-      {/* --- BACKGROUND DESIGN: Circuit Lines --- */}
-      <div className="absolute top-0 left-0 w-1/3 h-full pointer-events-none opacity-40">
-        <svg viewBox="0 0 400 800" className="w-full h-full">
-          <path
-            d="M0 200 H100 L150 250 H250"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-primary/40"
-          />
-          <path
-            d="M0 400 H150 L200 350 H300"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-primary/60"
-          />
-          <circle cx="250" cy="250" r="4" className="fill-primary" />
-          <circle cx="300" cy="350" r="3" className="fill-primary/50" />
-        </svg>
-      </div>
+    <section className="relative w-full h-screen min-h-200 flex items-center justify-center overflow-hidden bg-[#050505]">
+      {/* --- CINEMATIC BACKGROUND LAYER --- */}
+      <motion.div style={{ scale, y: y1 }} className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-black/40 z-10" />
 
-      <div className="absolute top-0 right-0 w-1/3 h-full pointer-events-none opacity-40">
-        <svg viewBox="0 0 400 800" className="w-full h-full">
-          <path
-            d="M400 300 H300 L250 350 H150"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-primary/40"
-          />
-          <path
-            d="M400 500 H250 L200 450 H100"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-primary/60"
-          />
-          <circle cx="150" cy="350" r="4" className="fill-primary" />
-        </svg>
-      </div>
+        {/* Replace with your high-res hero image */}
+        <img
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+          alt="Luxury Architecture"
+          className={`w-full h-full object-cover transition-all duration-1000 ${
+            isLoaded
+              ? "scale-100 blur-0 opacity-60"
+              : "scale-110 blur-2xl opacity-0"
+          }`}
+        />
+      </motion.div>
 
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center z-10">
-        {/* --- LEFT SIDE: Animated iLabs360 Text Logo --- */}
-        <div className="relative md:flex hidden justify-center items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative w-72 h-72 md:w-125 md:h-125 flex items-center justify-center"
-          >
-            {/* Animated Background Glow */}
+      {/* --- NOISE & OVERLAYS --- */}
+      <div
+        className="absolute inset-0 z-1 opacity-[0.03] pointer-events-none mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* --- TECH ELEMENTS (Circuitry from your first design) --- */}
+      <motion.div
+        style={{ y: y2 }}
+        className="absolute inset-0 z-2 pointer-events-none opacity-30"
+      >
+        <svg className="w-full h-full text-primary">
+          <motion.path
+            d="M-100 200 C 200 200, 400 400, 1200 400"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+          />
+        </svg>
+      </motion.div>
+
+      {/* --- MAIN CONTENT --- */}
+      <div className="container relative z-10 px-6 mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* LEFT CONTENT */}
+          <div className="lg:col-span-7 flex flex-col space-y-8">
             <motion.div
-              animate={{
-                scale: [1, 1.05, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-linear-to-r from-primary/10 via-secondary/5 to-primary/10 blur-3xl"
-            />
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 w-fit"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              <span className="text-xs font-mono tracking-[0.3em] text-white/80 uppercase">
+                SRL Group LTD - Premium Quality
+              </span>
+            </motion.div>
 
-            {/* Hexagon Container */}
-            <div className="absolute inset-0 bg-secondary/5 clip-hexagon border-2 border-primary/30 flex items-center justify-center overflow-hidden">
-              {/* Animated Circuit Lines Inside */}
-              <svg className="absolute inset-0 w-full h-full opacity-20">
-                <motion.path
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  d="M50,100 C150,50 250,150 350,100"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  className="text-primary"
-                />
-                <motion.path
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: 0.5,
-                  }}
-                  d="M100,200 C200,150 300,250 350,200"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  className="text-primary"
-                />
-              </svg>
-
-              {/* Animated Dots */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute w-4 h-4 rounded-full bg-primary/50"
-                style={{ top: "20%", left: "20%" }}
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute w-3 h-3 rounded-full bg-primary/30"
-                style={{ bottom: "30%", right: "25%" }}
-              />
+            <div className="overflow-hidden">
+              <h1 className="text-6xl md:text-8xl xl:text-9xl font-black text-white leading-[0.85] tracking-tighter uppercase">
+                {words.map((word, i) => (
+                  <span key={i} className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: 0 }}
+                      transition={{
+                        duration: 0.8,
+                        delay: i * 0.1,
+                        ease: [0.33, 1, 0.68, 1],
+                      }}
+                      className={`inline-block ${i === 2 ? "text-primary" : ""}`}
+                    >
+                      {word}
+                    </motion.span>
+                    {i === 1 && <br />}
+                  </span>
+                ))}
+              </h1>
             </div>
 
-            {/* iLabs360 Text Design */}
-            {/* Alternative iLabs360 Text Animation */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="max-w-xl text-lg md:text-xl text-white/60 font-light leading-relaxed"
+            >
+              Transforming skyline visions into architectural reality. We
+              provide modern legal and real estate solutions tailored for the
+              21st century.
+            </motion.p>
+
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              className="flex flex-wrap items-center gap-6 pt-4"
+            >
+              <Link href="/contact">
+                <button className="group relative px-8 py-4 bg-primary text-white font-bold uppercase tracking-widest overflow-hidden transition-all hover:pr-12">
+                  <span className="relative z-10">Start Project</span>
+                  <ArrowRight
+                    className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all"
+                    size={20}
+                  />
+                </button>
+              </Link>
+
+              <button className="flex items-center gap-4 text-white/80 hover:text-white transition-colors uppercase tracking-widest text-xs font-bold group">
+                <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary transition-colors">
+                  <Play size={18} fill="currentColor" />
+                </div>
+                Showcase
+              </button>
+            </motion.div>
+          </div>
+
+          {/* RIGHT CONTENT (The Interactive Branding Box) */}
+          <div className="lg:col-span-5 hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
-              className="relative"
+              className="relative aspect-square flex items-center justify-center"
             >
-              {/* Glowing Background Effect */}
+              {/* Spinning Hexagon Border */}
               <motion.div
-                animate={{
-                  background: [
-                    "radial-gradient(circle at center, rgba(var(--primary)/0.2) 0%, transparent 70%)",
-                    "radial-gradient(circle at center, rgba(var(--primary)/0.3) 0%, transparent 70%)",
-                    "radial-gradient(circle at center, rgba(var(--primary)/0.2) 0%, transparent 70%)",
-                  ],
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-0 -z-10"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 border border-primary/20 rounded-[20%] dashed-border"
               />
 
-              <div className="relative">
-                {/* Main Text with Gradient */}
-                <div className="text-center">
-                  <div className="relative inline-block">
-                    <motion.span
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="text-4xl md:text-6xl font-bold text-primary"
-                    >
-                      SRL
-                    </motion.span>
-
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="text-5xl md:text-8xl font-black text-primary bg-gradient-to-r from-primary via-primary/80 to-secondary bg-clip-text text-transparent tracking-tight"
-                    >
-                      Group
-                    </motion.span>
-
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        delay: 0.4,
-                      }}
-                      className="text-3xl md:text-6xl font-black text-secondary ml-2"
-                    >
-                      LTD
-                    </motion.span>
-                  </div>
-                </div>
-
-                {/* Animated Subtitle */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                  className="text-center mt-4"
-                >
-                  <span className="text-muted-foreground font-mono text-sm tracking-wider">
-                    THINK OUT OF THE BOX
-                  </span>
-                  <motion.div
-                    animate={{ width: ["0%", "100%", "0%"] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                    className="h-px bg-linear-to-r from-transparent via-primary to-transparent mx-auto mt-2"
+              <div className="text-center space-y-4">
+                <div className="text-primary font-mono text-lg md:text-xl h-20">
+                  <Typewriter
+                    options={{
+                      strings: [
+                        "Legal Consultation",
+                        "Property Advisory",
+                        "Compliance Support",
+                        "Investment Growth",
+                      ],
+                      autoStart: true,
+                      loop: true,
+                    }}
                   />
-                </motion.div>
+                </div>
+                <div className="h-px w-24 bg-primary/40 mx-auto" />
+                <p className="text-white/40 font-mono text-[10px] tracking-[0.5em] uppercase">
+                  Think out of the box
+                </p>
               </div>
             </motion.div>
-          </motion.div>
-        </div>
-
-        {/* --- RIGHT SIDE: Static Content --- */}
-        <div className="flex flex-col text-left space-y-6">
-          <div className="space-y-2">
-            <p className="text-muted-foreground font-mono text-sm md:text-base flex items-center gap-2">
-              <span className="text-primary font-bold">\\</span> Functional,
-              Usability & Performance
-            </p>
-            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-foreground uppercase leading-[0.9]">
-              REAL STATE <br />
-              <span className="text-primary">DEVELOPMENT</span>
-            </h1>
-          </div>
-
-          <div className="max-w-md">
-            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-              Transforming real estate and legal services with trusted, modern
-              solutions.
-            </p>
-          </div>
-
-          {/* Typewriter Effect & Video Button */}
-          <div className="flex flex-col md:flex-row md:items-center gap-8 pt-6">
-            <button className="group flex items-center gap-4 font-bold uppercase tracking-[0.2em] text-xs">
-              <div className="w-14 h-14 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <Play size={24} fill="currentColor" />
-              </div>
-              VIDEO SHOWCASE
-            </button>
-
-            <div className="text-primary font-mono text-xl md:text-2xl font-semibold border-l-2 border-primary/20 pl-6">
-              <Typewriter
-                options={{
-                  strings: [
-                    "Property Buying & Selling",
-                    "Real Estate Investment Advisory",
-                    "Legal Consultation & Case Support",
-                    "Property Documentation & Compliance",
-                  ],
-                  autoStart: true,
-                  loop: true,
-                  wrapperClassName: "text-primary",
-                  cursorClassName: "text-primary animate-pulse",
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Let's Talk Button */}
-          <div className="pt-8">
-            <Link href="/contact">
-              <button className="bg-primary text-white px-10 py-5 font-bold uppercase tracking-widest hover:translate-x-2 transition-transform duration-300 shadow-xl shadow-primary/30">
-                Let&apos;s Talk
-              </button>
-            </Link>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* --- BOTTOM DECORATION --- */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+        className="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-primary/50 to-transparent"
+      />
+
+      {/* --- SCROLL INDICATOR --- */}
+      <motion.div
+        style={{ opacity }}
+        className="absolute bottom-10 flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] text-white/30 tracking-[0.3em] uppercase">
+          Scroll
+        </span>
+        <div className="w-px h-12 bg-linear-to-b from-primary to-transparent" />
+      </motion.div>
+    </section>
   );
 };
 
