@@ -1,9 +1,12 @@
 import HomeAbout from "../components/home/HomeAbout";
 import BannerHome from "../components/home/HomeBanner";
+import HomeBusiness from "../components/home/HomeBusiness";
 import HomeChairman from "../components/home/HomeChairman";
 import HomeGallery from "../components/home/HomeGallery";
 import HomeNews from "../components/home/HomeNews";
+import HomeProjects from "../components/home/HomeProjects";
 import HomeSustain from "../components/home/HomeSustain";
+import HomeTestimonial from "../components/home/HomeTestimonial";
 import HomeWhyChoses from "../components/home/HomeWhyChose";
 
 export default function Home() {
@@ -41,6 +44,15 @@ export default function Home() {
         {/* Chairman Section */}
         <section className="mb-16">
           <HomeChairman />
+        </section>
+        <section className="mb-16">
+          <HomeProjects/>
+        </section>
+        <section className="mb-16">
+          <HomeBusiness/>
+        </section>
+        <section className="mb-16">
+          <HomeTestimonial/>
         </section>
       </div>
     </>

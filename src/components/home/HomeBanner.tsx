@@ -1,10 +1,10 @@
-"use client";
-
+"use client"
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
+import Image from "next/image";
 
 const BannerHome = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,16 +30,17 @@ const BannerHome = () => {
       <motion.div style={{ scale, y: y1 }} className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black z-10" />
         <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-black/40 z-10" />
-
         {/* Replace with your high-res hero image */}
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
           alt="Luxury Architecture"
-          className={`w-full h-full object-cover transition-all duration-1000 ${
+          fill
+          className={`object-cover transition-all duration-1000 ${
             isLoaded
               ? "scale-100 blur-0 opacity-60"
               : "scale-110 blur-2xl opacity-0"
           }`}
+          onLoad={() => setIsLoaded(true)}
         />
       </motion.div>
 
