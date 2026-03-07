@@ -163,7 +163,7 @@ const BannerHome = () => {
               />
 
               <div className="text-center space-y-4">
-                <div className="text-primary font-mono text-lg md:text-xl h-20">
+                <div className="text-secondary font-mono text-lg md:text-xl h-20">
                   <Typewriter
                     options={{
                       strings: [
@@ -177,7 +177,7 @@ const BannerHome = () => {
                     }}
                   />
                 </div>
-                <div className="h-px w-24 bg-primary/40 mx-auto" />
+                <div className="h-px w-24 bg-secondary/40 mx-auto" />
                 <p className="text-white/40 font-mono text-[10px] tracking-[0.5em] uppercase">
                   Think out of the box
                 </p>
