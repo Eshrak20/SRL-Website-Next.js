@@ -1,244 +1,252 @@
-/* eslint-disable react-hooks/purity */
 "use client";
 
+import React, { useState } from "react";
 import { features } from "@/src/data/HomeData/HomeWhyChose.data";
 import SectionTitle from "../SectionTitle";
-import { motion , type Variants } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Sparkles, Shield, Star, TrendingUp, Award, Zap } from "lucide-react";
-
-// Map of icon components (you can adjust based on your actual icons)
-const iconMap: { [key: string]: React.ElementType } = {
-  Shield: Shield,
-  Star: Star,
-  TrendingUp: TrendingUp,
-  Award: Award,
-  Zap: Zap,
-  Sparkles: Sparkles,
-};
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  ArrowUpRight, Award, Star, TrendingUp, Zap, 
+  Shield, CheckCircle, Sparkles, Gem, Building2,
+  Briefcase, Scale, Landmark, ChevronRight
+} from "lucide-react";
 
 const HomeWhyChoses = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const [selectedCard, setSelectedCard] = useState(1); // Middle card selected by default (index 1)
 
-  // Container animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
+  // Stats data
+  const stats = [
+    { value: "500+", label: "Venture Assets", icon: Award },
+    { value: "98%", label: "Legal Success", icon: Star },
+    { value: "15+", label: "Years in Market", icon: TrendingUp },
+    { value: "24/7", label: "Priority Support", icon: Zap },
+  ];
 
-  const itemVariants : Variants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  };
+  // Achievement badges
+  const achievements = [
+    { icon: Shield, label: "ISO Certified" },
+    { icon: Scale, label: "Legal Excellence" },
+    { icon: Gem, label: "Premium Partner" },
+  ];
 
   return (
-    <section className="container mx-auto px-4 bg-linear-to-b from-background via-background to-background/95 overflow-hidden relative">
-      {/* Decorative background elements */}
-      <motion.div
-        animate={{
-          rotate: 360,
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-          scale: { duration: 8, repeat: Infinity },
-        }}
-        className="absolute -top-40 -right-40 w-80 h-80 border-2 border-primary/5 rounded-full"
-      />
-      <motion.div
-        animate={{
-          rotate: -360,
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          rotate: { duration: 50, repeat: Infinity, ease: "linear" },
-          scale: { duration: 10, repeat: Infinity },
-        }}
-        className="absolute -bottom-40 -left-40 w-96 h-96 border-2 border-primary/5 rounded-full"
-      />
-
-      {/* Floating particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, i % 2 === 0 ? 20 : -20, 0],
-              opacity: [0, 0.5, 0],
-            }}
-            transition={{
-              duration: 5 + i,
-              delay: i * 0.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute w-1 h-1 bg-primary/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+    <section className="relative py-24 overflow-hidden bg-background">
+      {/* Subtle Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Header with animation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 relative"
-        >
-          {/* Decorative badge */}
-          <SectionTitle name="Why SRL ?" />
-        </motion.div>
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Header Section */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-3 px-4 py-2 bg-secondary rounded-full mb-6"
+            >
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-xs font-medium text-primary">
+                The SRL Advantage
+              </span>
+              <div className="w-1 h-1 rounded-full bg-primary/30" />
+              <span className="text-xs text-muted-foreground">
+                Est. 2010
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <SectionTitle name="Why SRL for Real Estate & Law?" />
+            </motion.div>
+
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-muted-foreground max-w-2xl mt-4"
+            >
+              We bridge the gap between luxury architecture and sophisticated legal frameworks, 
+              delivering excellence through integrated solutions.
+            </motion.p>
+          </div>
+
+          {/* Achievement Badges */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex gap-2"
+          >
+            {achievements.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -2 }}
+                  className="bg-secondary px-3 py-1.5 rounded-md flex items-center gap-1.5"
+                >
+                  <Icon className="w-3.5 h-3.5 text-primary" />
+                  <span className="text-xs font-medium text-foreground">{item.label}</span>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
 
         {/* Features Grid */}
-        <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((item, index) => {
-            const IconComponent = iconMap[item.icon as unknown as keyof typeof iconMap] || Sparkles;
-            
+            const isSelected = selectedCard === index;
+
             return (
               <motion.div
                 key={index}
-                variants={itemVariants}
-                whileHover={{ 
-                  y: -10,
-                  transition: { type: "spring", stiffness: 300 }
-                }}
-                className="group relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -4 }}
+                onClick={() => setSelectedCard(index)}
+                className="group relative cursor-pointer"
               >
-                {/* Gradient border effect on hover */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
-                
-                <div className="relative bg-card p-8 rounded-2xl shadow-lg border border-border/50 hover:border-transparent transition-all duration-500 h-full flex flex-col backdrop-blur-sm">
-                  {/* Icon with animated background */}
+                {/* Selection Indicator */}
+                {isSelected && (
                   <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                    className="relative mb-6 w-16 h-16"
-                  >
-                    <div className="absolute inset-0 bg-primary/10 rounded-2xl rotate-45 group-hover:rotate-0 transition-all duration-500" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <IconComponent className="w-8 h-8 text-primary" />
-                    </div>
-                    
-                    {/* Ripple effect */}
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.5, 2],
-                        opacity: [0.5, 0.2, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: index * 0.2,
-                      }}
-                      className="absolute inset-0 bg-primary/20 rounded-full"
-                    />
-                  </motion.div>
+                    layoutId="selectedCard"
+                    className="absolute -inset-0.5 bg-primary rounded-lg opacity-20"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
 
-                  {/* Title with gradient on hover */}
-                  <motion.h3 
-                    className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-primary/60 transition-all duration-300"
+                {/* Card Body */}
+                <div className={`relative h-full p-6 rounded-lg border-2 transition-all duration-300
+                  ${isSelected 
+                    ? 'bg-primary border-primary' 
+                    : 'bg-card border-border hover:border-primary/30 hover:shadow-lg'
+                  }`}
+                >
+                  {/* Icon Container - Fixed hover issue */}
+                  <div className="mb-4">
+                    <div className={`w-12 h-12 rounded-md flex items-center justify-center transition-colors duration-300
+                      ${isSelected 
+                        ? 'bg-white text-primary-foreground' 
+                        : 'bg-secondary text-primary'
+                      }`}
+                    >
+                      {item.icon}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <h3 className={`text-lg font-semibold mb-2 transition-colors
+                    ${isSelected ? 'text-primary-foreground' : 'text-foreground group-hover:text-primary'}`}
                   >
                     {item.title}
-                  </motion.h3>
+                  </h3>
 
-                  {/* Description */}
-                  <p className="text-muted-foreground text-[15px] leading-relaxed mb-6 grow">
+                  <p className={`text-sm leading-relaxed mb-4
+                    ${isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}
+                  >
                     {item.description}
                   </p>
 
-                  {/* Learn more link */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-2 text-primary text-sm font-medium mt-auto"
-                  >
-                    <span>Learn more</span>
-                    <motion.svg
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                      className="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </motion.svg>
-                  </motion.div>
+                  {/* Feature Tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {['Premium', 'Trusted', 'Global'].map((tag, i) => (
+                      <span
+                        key={i}
+                        className={`text-xs px-2 py-0.5 rounded
+                          ${isSelected 
+                            ? 'bg-primary-foreground/20 text-primary-foreground' 
+                            : 'bg-secondary text-muted-foreground'
+                          }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
 
-                  {/* Decorative corner elements */}
-                  <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-primary/20 rounded-tr-2xl group-hover:border-primary/50 transition-colors duration-500" />
-                  <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-primary/20 rounded-bl-2xl group-hover:border-primary/50 transition-colors duration-500" />
+                  {/* Progress Bar */}
+                  <div className={`h-1 rounded-full overflow-hidden
+                    ${isSelected ? 'bg-primary-foreground/20' : 'bg-secondary'}`}
+                  >
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "75%" }}
+                      transition={{ delay: 0.3, duration: 1 }}
+                      className={`h-full rounded-full
+                        ${isSelected ? 'bg-primary-foreground' : 'bg-primary'}`}
+                    />
+                  </div>
+
+                  {/* Success Rate */}
+                  <div className="mt-3 flex items-center gap-1.5">
+                    <CheckCircle className={`w-3.5 h-3.5 ${isSelected ? 'text-primary-foreground' : 'text-primary'}`} />
+                    <span className={`text-xs ${isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
+                      98% Satisfaction
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
 
-        {/* Stats counter section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+        {/* Stats Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
+          transition={{ duration: 0.6 }}
+          className="mt-16 pt-8 border-t border-border"
         >
-          {[
-            { value: "500+", label: "Projects Completed", icon: Award },
-            { value: "98%", label: "Client Satisfaction", icon: Star },
-            { value: "15+", label: "Years Experience", icon: TrendingUp },
-            { value: "24/7", label: "Support Available", icon: Zap },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              className="text-center group"
-            >
-              <div className="relative inline-block mb-3">
-                <stat.icon className="w-6 h-6 text-primary/60 group-hover:text-primary transition-colors" />
-                <motion.div
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.3, 0.1, 0.3],
-                  }}
-                  transition={{
-                    duration: 2,
-                    delay: index * 0.3,
-                    repeat: Infinity,
-                  }}
-                  className="absolute inset-0 bg-primary/20 rounded-full blur"
-                />
-              </div>
-              <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </motion.div>
-          ))}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -2 }}
+                  className="group"
+                >
+                  <div className="flex items-start gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-md transition-all">
+                    <div className="p-2 rounded-md bg-secondary text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xl font-bold text-foreground">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {stat.label}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Trust Message */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mt-8 text-center"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary rounded-md">
+              <Shield className="w-4 h-4 text-primary" />
+              <span className="text-sm text-foreground">Trusted by 500+ global enterprises</span>
+              <span className="text-sm text-primary font-medium">→</span>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

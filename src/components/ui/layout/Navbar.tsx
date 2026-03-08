@@ -114,7 +114,7 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-70 transition-all duration-300 ${
           isScrolled
-            ? "bg-[#050505]/90 backdrop-blur-md shadow-md py-2"
+            ? "bg-white/90 backdrop-blur-md shadow-md py-2"
             : "bg-transparent py-4"
         }`}
       >
@@ -146,10 +146,15 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
+              // className={`group flex items-center gap-3 px-5 py-2.5 rounded-full transition-all ${
+              //   isScrolled
+              //     ? "bg-primary text-white"
+              //     : "bg-white/10 backdrop-blur-md border border-white/20 text-white"
+              // }`}
               className={`group flex items-center gap-3 px-5 py-2.5 rounded-full transition-all ${
                 isScrolled
                   ? "bg-primary text-white"
-                  : "bg-white/10 backdrop-blur-md border border-white/20 text-white"
+                  : "bg-primary text-white"
               }`}
             >
               <span className="hidden md:block text-xs font-black uppercase tracking-[0.2em]">
@@ -162,11 +167,11 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
                     rotate: isOpen ? 45 : 0,
                     y: isOpen ? 5.5 : 0,
                   }}
-                  className={`h-[1.5px] rounded-full origin-right ${isScrolled ? "bg-white" : "bg-primary"}`}
+                  className={`h-[1.5px] rounded-full origin-right ${isScrolled ? "bg-white" : "bg-white"}`}
                 />
                 <motion.span
                   animate={{ opacity: isOpen ? 0 : 1 }}
-                  className={`h-[1.5px] w-2/3 rounded-full ${isScrolled ? "bg-white" : "bg-primary"}`}
+                  className={`h-[1.5px] w-2/3 rounded-full ${isScrolled ? "bg-white" : "bg-white"}`}
                 />
                 <motion.span
                   animate={{
@@ -174,7 +179,7 @@ const Navbar = ({ socialLinks = [], settingData }: NavbarProps) => {
                     rotate: isOpen ? -45 : 0,
                     y: isOpen ? -5.5 : 0,
                   }}
-                  className={`h-[1.5px] rounded-full origin-right ${isScrolled ? "bg-white" : "bg-primary"}`}
+                  className={`h-[1.5px] rounded-full origin-right ${isScrolled ? "bg-white" : "bg-white"}`}
                 />
               </div>
             </motion.button>

@@ -16,23 +16,21 @@ export default function Home() {
       <section className="w-full mb-16">
         <BannerHome />
         <HomeAbout />
-
       </section>
 
       <div className="container mx-auto px-4">
-        {/* Why Choose Us Section */}
-        <section className="mb-16 text-center">
-          <HomeWhyChoses />
-        </section>
-
         {/* Projects Section */}
         <section className="mb-16">
           <HomeProjects />
         </section>
+        {/* Why Choose Us Section */}
 
         {/* Gallery Section */}
         <section className="mb-16">
           <HomeGallery />
+        </section>
+        <section className="mb-16 text-center">
+          <HomeWhyChoses />
         </section>
         <section className="mb-16">
           <HomeSustain />

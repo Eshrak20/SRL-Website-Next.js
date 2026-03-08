@@ -32,7 +32,8 @@ import Typewriter from "typewriter-effect";
 
 export default function HomeAbout() {
   const { mainTitle, cards, images } = homeAboutData;
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   const statsRef = useRef(null);
   const [hoveredCard, setHoveredCard] = useState(null);
   // Parallax scroll effect
@@ -48,9 +49,7 @@ export default function HomeAbout() {
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1, 1.2]);
   const imageRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-5, 0, 5]);
   const imageX = useTransform(scrollYProgress, [0, 0.5, 1], [-100, 0, 100]);
-  const imageY = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const overlayY = useTransform(scrollYProgress, [0, 1], [150, -150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [0, 1, 1]);
   const blur = useTransform(scrollYProgress, [0, 0.5], [10, 0]);
 
   // Smooth spring values for mouse follow
@@ -84,10 +83,9 @@ export default function HomeAbout() {
       color: "from-primary to-primary",
     },
   ];
-
   // Track mouse position for parallax effect
   useEffect(() => {
-    const handleMouseMove = (e: { clientX: number; clientY: number; }) => {
+    const handleMouseMove = (e: { clientX: number; clientY: number }) => {
       const rect = containerRef.current?.getBoundingClientRect();
       if (rect) {
         const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -211,7 +209,7 @@ export default function HomeAbout() {
 
                 {/* Cinematic overlay gradient */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                  className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent"
                   animate={{
                     opacity: [0.4, 0.6, 0.4],
                   }}
@@ -300,7 +298,7 @@ export default function HomeAbout() {
 
                 {/* Overlay shine effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-tr from-white/30 to-transparent"
+                  className="absolute inset-0 bg-linear-to-tr from-white/30 to-transparent"
                   animate={{
                     x: ["-100%", "100%"],
                   }}
@@ -313,8 +311,7 @@ export default function HomeAbout() {
                 />
 
                 {/* Play Button Overlay */}
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500">
-                </div>
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-500"></div>
               </motion.div>
 
               {/* Decorative rotating elements */}
@@ -381,7 +378,7 @@ export default function HomeAbout() {
                     <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
                       {/* Animated gradient background */}
                       <motion.div
-                        className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover/stat:opacity-10 rounded-2xl transition-opacity duration-500`}
+                        className={`absolute inset-0 bg-linear-to-br ${stat.color} opacity-0 group-hover/stat:opacity-10 rounded-2xl transition-opacity duration-500`}
                       />
 
                       <div className="relative">
@@ -394,7 +391,7 @@ export default function HomeAbout() {
                             repeat: Infinity,
                             delay: index * 0.2,
                           }}
-                          className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center mb-3"
+                          className="w-10 h-10 rounded-xl bg-linear-to-br from-primary/10 to-primary/5 flex items-center justify-center mb-3"
                         >
                           <Icon className="w-5 h-5 text-primary" />
                         </motion.div>

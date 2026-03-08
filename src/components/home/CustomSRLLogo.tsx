@@ -19,9 +19,9 @@ const CustomSRLLogo = () => {
         {/* "SRL" Main Text */}
         <div className="relative group">
           <h2 className="text-7xl md:text-8xl font-black tracking-tighter flex items-center">
-            <span className="text-white drop-shadow-2xl">S</span>
+            <span className="text-black drop-shadow-2xl">S</span>
             <span className="text-primary -ml-2 drop-shadow-[0_0_15px_rgba(var(--primary),0.5)]">R</span>
-            <span className="text-white -ml-2">L</span>
+            <span className="text-black -ml-2">L</span>
           </h2>
           
           {/* Animated underline for the letters */}
@@ -37,7 +37,7 @@ const CustomSRLLogo = () => {
       {/* "GROUP" Subtitle with high tracking */}
       <div className="mt-2 flex items-center gap-4 w-full">
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-white/40" />
-        <span className="text-sm md:text-base font-bold tracking-[0.6em] text-white/80 uppercase">
+        <span className="text-sm md:text-base font-bold tracking-[0.6em] text-black/80 uppercase">
           Group
         </span>
         <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-white/20 to-white/40" />
