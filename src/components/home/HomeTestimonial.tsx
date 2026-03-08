@@ -15,7 +15,7 @@ import { testimonialData } from "@/src/data/HomeData/HomeTestimonial.data";
 const HomeTestimonial = () => {
   return (
     <section className="py-20 px-4 md:px-10 bg-background transition-colors duration-300">
-      <div className="max-w-7xl mx-auto">
+      <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="mb-12 border-l-2 border-primary pl-6">
           <p className="text-xs font-bold tracking-[0.3em] text-muted-foreground uppercase mb-2">

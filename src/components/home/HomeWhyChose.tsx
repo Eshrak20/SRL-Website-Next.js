@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/purity */
 "use client";
 
 import { features } from "@/src/data/HomeData/HomeWhyChose.data";
 import SectionTitle from "../SectionTitle";
-import { motion } from "framer-motion";
+import { motion , type Variants } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Sparkles, Shield, Star, TrendingUp, Award, Zap } from "lucide-react";
 
@@ -34,7 +35,7 @@ const HomeWhyChoses = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants : Variants = {
     hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
@@ -48,7 +49,7 @@ const HomeWhyChoses = () => {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background via-background to-background/95 overflow-hidden relative">
+    <section className="container mx-auto px-4 bg-linear-to-b from-background via-background to-background/95 overflow-hidden relative">
       {/* Decorative background elements */}
       <motion.div
         animate={{
@@ -107,26 +108,7 @@ const HomeWhyChoses = () => {
           className="text-center mb-16 relative"
         >
           {/* Decorative badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Why Choose Us</span>
-          </motion.div>
-
           <SectionTitle name="Why SRL ?" />
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg"
-          >
-            Discover what makes us the preferred choice for businesses worldwide
-          </motion.p>
         </motion.div>
 
         {/* Features Grid */}
@@ -138,7 +120,7 @@ const HomeWhyChoses = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {features.map((item, index) => {
-            const IconComponent = iconMap[item.icon as keyof typeof iconMap] || Sparkles;
+            const IconComponent = iconMap[item.icon as unknown as keyof typeof iconMap] || Sparkles;
             
             return (
               <motion.div
@@ -257,31 +239,6 @@ const HomeWhyChoses = () => {
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Bottom CTA section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-20 text-center"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative px-8 py-4 bg-primary text-white font-medium rounded-full overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Get Started Today
-              <Sparkles className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            </span>
-            <motion.div
-              initial={{ x: "-100%" }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary"
-            />
-          </motion.button>
         </motion.div>
       </div>
     </section>

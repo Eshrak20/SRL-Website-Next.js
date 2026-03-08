@@ -11,7 +11,7 @@ const HomeSustain = () => {
   const rightCol = imgList.slice(2, 4);
 
   return (
-    <section className="">
+    <section className="container mx-auto px-4">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         
         {/* Left Side: Image Collage with Loops */}

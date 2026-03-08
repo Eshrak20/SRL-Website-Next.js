@@ -14,13 +14,13 @@ const HomeProjects = () => {
   const { featuredLabel, sectionTitle, projects } = homeProjectData;
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-background text-foreground transition-colors duration-300">
+    <section className="py-16 bg-background text-foreground transition-colors duration-300">
       <Carousel
         opts={{
           align: "start",
           loop: true,
         }}
-        className="w-full max-w-7xl mx-auto"
+        className="container mx-auto px-4"
       >
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">

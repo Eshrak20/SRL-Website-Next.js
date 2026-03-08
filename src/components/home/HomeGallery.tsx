@@ -25,7 +25,7 @@ const HomeGallery = () => {
   const visibleItems = getVisibleItems();
 
   return (
-    <section className="">
+    <section className="container mx-auto px-4">
       <div className="mb-12 flex justify-between items-end">
         <div>
           <span className="text-primary font-bold tracking-[0.25em] uppercase text-[10px] mb-3 block">

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { Quote, Award, Users, Building2, ChevronRight } from "lucide-react";
+import { Quote, Award, Users, Building2 } from "lucide-react";
 import { HomeChairmanData } from "@/src/data/HomeData/HomeChairman.data";
 
 const HomeChairman = () => {
@@ -21,7 +21,7 @@ const HomeChairman = () => {
   const textParallax = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section ref={containerRef} className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white">
+    <section ref={containerRef} className="relative overflow-hidden container mx-auto px-4 bg-gradient-to-br from-gray-50 to-white">
       {/* Decorative background elements */}
       <motion.div 
         animate={{ 
@@ -234,39 +234,6 @@ const HomeChairman = () => {
                   <div className="text-xs text-gray-500">{stat.label}</div>
                 </motion.div>
               ))}
-            </motion.div>
-
-            {/* Call to action buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="flex flex-wrap gap-4"
-            >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-8 py-4 bg-primary text-white font-medium rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  View Full Profile
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <motion.div
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary"
-                />
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300"
-              >
-                Read Message
-              </motion.button>
             </motion.div>
           </div>
 
