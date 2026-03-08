@@ -34,7 +34,7 @@ export default function HomeAbout() {
   const { mainTitle, cards, images } = homeAboutData;
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const statsRef = useRef(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   // Parallax scroll effect
   const { scrollYProgress } = useScroll({
@@ -53,8 +53,10 @@ export default function HomeAbout() {
   const blur = useTransform(scrollYProgress, [0, 0.5], [10, 0]);
 
   // Smooth spring values for mouse follow
-  const springX = useSpring(useMotionValue(0), { stiffness: 100, damping: 30 });
-  const springY = useSpring(useMotionValue(0), { stiffness: 100, damping: 30 });
+  const motionX = useMotionValue(0);
+  const motionY = useMotionValue(0);
+  const springX = useSpring(motionX, { stiffness: 100, damping: 30 });
+  const springY = useSpring(motionY, { stiffness: 100, damping: 30 });
 
   // Stats data
   const stats = [
@@ -101,7 +103,19 @@ export default function HomeAbout() {
 
   // Random icons for cards
   const cardIcons = [Award, Users, Home, Star, Shield, TrendingUp];
+  const [particlePositions, setParticlePositions] = useState<
+    { x: number; y: number }[]
+  >([]);
 
+  useEffect(() => {
+    setParticlePositions(
+      [...Array(20)].map(() => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+      })),
+    );
+  }, []);
+  
   return (
     <section ref={containerRef} className="relative py-32 overflow-hidden">
       {/* Animated Background Elements */}
@@ -110,27 +124,26 @@ export default function HomeAbout() {
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
 
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/30 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            animate={{
-              y: [0, -30, 30, -30, 0],
-              x: [0, 30, -30, 30, 0],
-              opacity: [0, 1, 0.5, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
+        <div className="absolute inset-0 pointer-events-none">
+          {particlePositions.map((pos, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-primary/30 rounded-full"
+              initial={{ x: pos.x, y: pos.y }}
+              animate={{
+                y: [0, -30, 30, -30, 0],
+                x: [0, 30, -30, 30, 0],
+                opacity: [0, 1, 0.5, 1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 10 + 10,
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="container relative z-10 mx-auto px-4">

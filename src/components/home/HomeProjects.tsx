@@ -1,33 +1,51 @@
 "use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
+import React, { useState } from "react";
+import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { homeProjectData } from '@/src/data/HomeData/HomeProject.data';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Calendar, User, Maximize2, ChevronLeft, ChevronRight, Heart, Share2 } from 'lucide-react';
+import {
+  homeProjectData,
+  ProjectImage,
+} from "@/src/data/HomeData/HomeProject.data";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  X,
+  MapPin,
+  Calendar,
+  User,
+  Maximize2,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Share2,
+} from "lucide-react";
 
 const HomeProjects = () => {
   const { featuredLabel, sectionTitle, projects } = homeProjectData;
-  const [selectedProject, setSelectedProject] = useState(null);
+
+  const [selectedProject, setSelectedProject] = useState<ProjectImage | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (project) => {
+  const openModal = (project: ProjectImage) => {
     setSelectedProject(project);
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
+
+    // eslint-disable-next-line react-hooks/immutability
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = "unset";
     setTimeout(() => setSelectedProject(null), 300);
   };
 
@@ -51,7 +69,7 @@ const HomeProjects = () => {
                 {sectionTitle}
               </h2>
             </div>
-            
+
             {/* Controls */}
             <div className="flex gap-2 relative">
               <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary text-primary hover:bg-primary hover:text-primary-foreground dark:border-muted dark:text-muted" />
@@ -62,7 +80,10 @@ const HomeProjects = () => {
           {/* Slider Content */}
           <CarouselContent className="-ml-4">
             {projects.map((project) => (
-              <CarouselItem key={project.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+              <CarouselItem
+                key={project.id}
+                className="pl-4 md:basis-1/2 lg:basis-1/3"
+              >
                 <div className="group relative h-[500px] overflow-hidden rounded-sm transition-all duration-500">
                   {/* Image background */}
                   <Image
@@ -71,7 +92,7 @@ const HomeProjects = () => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  
+
                   {/* Overlay Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
@@ -83,16 +104,16 @@ const HomeProjects = () => {
                     <p className="text-sm font-light text-gray-300 mb-4 uppercase">
                       {project.location}
                     </p>
-                    
+
                     {project.description && (
                       <p className="text-xs leading-relaxed text-gray-400 mb-6 max-w-[250px] line-clamp-3">
                         {project.description}
                       </p>
                     )}
 
-                    <Button 
+                    <Button
                       onClick={() => openModal(project)}
-                      variant="outline" 
+                      variant="outline"
                       className="bg-transparent border-white text-white hover:bg-white hover:text-black rounded-none px-8 text-xs uppercase transition-all duration-300"
                     >
                       Explore
@@ -136,8 +157,11 @@ const HomeProjects = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  const currentIndex = projects.findIndex(p => p.id === selectedProject.id);
-                  const prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1;
+                  const currentIndex = projects.findIndex(
+                    (p) => p.id === selectedProject.id,
+                  );
+                  const prevIndex =
+                    currentIndex > 0 ? currentIndex - 1 : projects.length - 1;
                   setSelectedProject(projects[prevIndex]);
                 }}
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-sm text-white transition-colors"
@@ -148,8 +172,11 @@ const HomeProjects = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  const currentIndex = projects.findIndex(p => p.id === selectedProject.id);
-                  const nextIndex = currentIndex < projects.length - 1 ? currentIndex + 1 : 0;
+                  const currentIndex = projects.findIndex(
+                    (p) => p.id === selectedProject.id,
+                  );
+                  const nextIndex =
+                    currentIndex < projects.length - 1 ? currentIndex + 1 : 0;
                   setSelectedProject(projects[nextIndex]);
                 }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-sm text-white transition-colors"
@@ -168,7 +195,7 @@ const HomeProjects = () => {
                     className="object-cover"
                     priority
                   />
-                  
+
                   {/* Image Overlay Info */}
                   <div className="absolute bottom-4 left-4 flex gap-2">
                     <button className="p-2 bg-white/20 backdrop-blur-sm rounded-sm text-white hover:bg-white/30 transition-colors">
@@ -204,17 +231,22 @@ const HomeProjects = () => {
                   {/* Description */}
                   <div className="space-y-4 mb-8">
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                      {selectedProject.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."}
+                      {selectedProject.description ||
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."}
                     </p>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident.
                     </p>
                   </div>
 
                   {/* Project Details Grid */}
                   <div className="grid grid-cols-2 gap-4 mb-8">
                     <div className="p-4 bg-secondary rounded-sm">
-                      <p className="text-xs text-muted-foreground mb-1">Client</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Client
+                      </p>
                       <p className="font-semibold">SRL Group</p>
                     </div>
                     <div className="p-4 bg-secondary rounded-sm">
@@ -222,11 +254,15 @@ const HomeProjects = () => {
                       <p className="font-semibold">2024</p>
                     </div>
                     <div className="p-4 bg-secondary rounded-sm">
-                      <p className="text-xs text-muted-foreground mb-1">Category</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Category
+                      </p>
                       <p className="font-semibold">Residential</p>
                     </div>
                     <div className="p-4 bg-secondary rounded-sm">
-                      <p className="text-xs text-muted-foreground mb-1">Architect</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Architect
+                      </p>
                       <p className="font-semibold">John Doe</p>
                     </div>
                   </div>
@@ -236,7 +272,10 @@ const HomeProjects = () => {
                     <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-sm">
                       Request Info
                     </Button>
-                    <Button variant="outline" className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-sm">
+                    <Button
+                      variant="outline"
+                      className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-sm"
+                    >
                       Schedule Tour
                     </Button>
                   </div>
@@ -244,11 +283,16 @@ const HomeProjects = () => {
                   {/* Tags */}
                   <div className="mt-6 pt-6 border-t border-border">
                     <div className="flex flex-wrap gap-2">
-                      {['Luxury', 'Modern', 'Architecture', 'Premium'].map((tag, i) => (
-                        <span key={i} className="px-3 py-1 bg-secondary text-xs text-muted-foreground rounded-sm">
-                          #{tag}
-                        </span>
-                      ))}
+                      {["Luxury", "Modern", "Architecture", "Premium"].map(
+                        (tag, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1 bg-secondary text-xs text-muted-foreground rounded-sm"
+                          >
+                            #{tag}
+                          </span>
+                        ),
+                      )}
                     </div>
                   </div>
                 </div>
