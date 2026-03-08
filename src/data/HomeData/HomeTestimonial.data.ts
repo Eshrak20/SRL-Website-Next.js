@@ -1,5 +1,4 @@
 // src/data/HomeData/HomeTestimonial.data.ts
-
 export interface TestimonialData {
   id: string;
   videoThumbnail: string;
@@ -9,6 +8,7 @@ export interface TestimonialData {
   authorName: string;
   authorRole: string;
   projectName: string;
+  youtubeId: string; // Added for actual video playback
 }
 
 export const testimonialData: TestimonialData[] = [
@@ -20,7 +20,8 @@ export const testimonialData: TestimonialData[] = [
     quoteDescription: "From blueprint to reality, every detail was handled with precision. The team's commitment to quality made our dream home a masterpiece.",
     authorName: "Sarah Mitchell",
     authorRole: "First-time Homeowner",
-    projectName: "EDISON ADELIA"
+    projectName: "EDISON ADELIA",
+    youtubeId: "kWe-_SUFYyI" 
   },
   {
     id: "2",
@@ -30,7 +31,8 @@ export const testimonialData: TestimonialData[] = [
     quoteDescription: "As an investor, I've worked with many developers. SRL stands out for their transparency and exceptional project execution.",
     authorName: "Michael Chen",
     authorRole: "Property Investor",
-    projectName: "EDISON PORTIA"
+    projectName: "EDISON PORTIA",
+    youtubeId: "KUIJZ3rWQNY"
   },
   {
     id: "3",
@@ -40,6 +42,7 @@ export const testimonialData: TestimonialData[] = [
     quoteDescription: "The integrated legal support made our property acquisition smooth and worry-free. Truly a one-stop solution.",
     authorName: "Priya Sharma",
     authorRole: "Commercial Buyer",
-    projectName: "EDISON TOWER"
+    projectName: "EDISON TOWER",
+    youtubeId: "IX-arMfCF0A"
   }
 ];

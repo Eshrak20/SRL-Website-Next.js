@@ -35,7 +35,7 @@ export default function HomeAbout() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const statsRef = useRef(null);
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   // Parallax scroll effect
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -440,7 +440,7 @@ export default function HomeAbout() {
             >
               <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
                 With over a decade of excellence in real estate development,
-                we've crafted spaces that redefine luxury and comfort. Our
+                we&apos;ve crafted spaces that redefine luxury and comfort. Our
                 commitment to quality and innovation sets us apart.
               </p>
 
